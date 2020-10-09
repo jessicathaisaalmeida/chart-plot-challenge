@@ -4,11 +4,11 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 
-//import styled from 'styled-components';
-
 const fullSizedEditor = {
   width: "100%",
-  fontFamily: "'Source Code Pro', sans-serif"
+  height: "100%",
+  fontFamily: "'Source Code Pro', sans-serif",
+  position: "relative"
 };
 
 export default class InputArea extends React.Component {
@@ -19,7 +19,8 @@ export default class InputArea extends React.Component {
           style={fullSizedEditor}
           mode="javascript"
           theme="monokai"
-          onChange={() => {}}
+          onChange={this.props.onChange}
+          value={this.props.value}
         />
       </div>
     );
