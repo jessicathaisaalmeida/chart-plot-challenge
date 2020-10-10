@@ -1,6 +1,6 @@
 import React from "react";
-import InputArea from "./chartPlotting/InputArea";
-import ChartArea from "./chartPlotting/ChartArea";
+import InputArea from "./components/InputArea";
+import ChartArea from "./components/ChartArea";
 import "./styles.css";
 
 export default class App extends React.Component {

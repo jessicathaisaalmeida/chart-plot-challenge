@@ -1,9 +1,11 @@
-function getValueFromString(data) {
+export const getValueFromString = (data) => {
+  if (!data) return null;
   data = data.trim();
+  if (data.indexOf("null") !== -1) return null;
   if (data[0] === "'") return data.substring(1, data.length - 1);
   else if (!isNaN(data) && !isNaN(parseFloat(data))) return Number(data);
   else if (data[0] === "[") return getArrayFromString(data);
-}
+};
 
 function getArrayFromString(data) {
   if (!data) return null;
