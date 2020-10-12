@@ -5,7 +5,7 @@ Created with CodeSandbox
 That challenge was very different to me, because I wasn't confortable to REACTjs codding;
 That was my first attempt to REACTjs codding, my first time seeing that kind of code. That's why in time of codding I was also learning the language, the patterns, the best practices and the 'aces in the hole'.
 
-Despite not having delivered it on time, I despend some hour getting it better on the weekend, organazing it and writing some tests in order to give you a nice and easy to maintain solution.
+Despite not having delivered it on time, I despend some hour getting it better on the weekend, organazing it, in order to give you a nice and easy to maintain solution.
 
 ## Dependecies
 
@@ -22,3 +22,6 @@ For this challenge I used some dependencies in order to help and minimize the ef
 
 - `json5`
   Used to parse the input stream into an object;
+
+- `react-splitter-layout`
+  Used for split panels between editor and chart

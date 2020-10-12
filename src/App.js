@@ -44,10 +44,11 @@ export default class App extends React.Component {
       <div className="App">
         <SplitterLayout
           vertical={true}
+          percentage={true}
           primaryIndex={0}
-          primaryInitialSize={300}
-          primaryMinSize={300}
-          secondaryMinSize={400}
+          secondaryInitialSize={65}
+          primaryMinSize={25}
+          secondaryMinSize={50}
         >
           <div className="input">
             <div className="title">{this.name}'s Challenge</div>

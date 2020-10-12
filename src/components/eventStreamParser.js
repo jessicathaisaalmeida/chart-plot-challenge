@@ -1,6 +1,6 @@
 import json5 from "json5";
 
-const startParser = {
+export const startParser = {
   validate: function (data) {
     let isValid = true;
     Object.keys(this.definition).forEach((def) => {
@@ -20,7 +20,7 @@ const startParser = {
   }
 };
 
-const dataParser = {
+export const dataParser = {
   validate: function (data) {
     let isValid = true;
     Object.keys(this.definition).forEach((def) => {
@@ -38,7 +38,7 @@ const dataParser = {
   }
 };
 
-const stopParser = {
+export const stopParser = {
   validate: function (data) {
     let isValid = true;
     Object.keys(this.definition).forEach((def) => {
@@ -56,7 +56,7 @@ const stopParser = {
   }
 };
 
-const spanParser = {
+export const spanParser = {
   validate: function (data) {
     let isValid = true;
     Object.keys(this.definition).forEach((def) => {
@@ -80,6 +80,9 @@ const parserStrategies = [startParser, spanParser, stopParser, dataParser];
 
 export const parseEventStreamToList = (eventStream) => {
   let eventList = [];
+
+  if (!eventStream || eventStream.length === 0) return [];
+
   eventStream.split("\n").forEach((eventStreamLine) => {
     const eventObject = json5.parse(eventStreamLine);
     //validate the objects

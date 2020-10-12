@@ -65,8 +65,9 @@ function generateChartOptions(chart) {
           gridLines: {
             display: true
           },
-          labels: {
-            show: false
+          ticks: {
+            beginAtZero: true,
+            display: false
           }
         }
       ]
@@ -110,10 +111,17 @@ export default class ChartArea extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.eventStream) {
+    try {
+      if (newProps.eventStream) {
+        this.setState({
+          generationError: "",
+          chartData: chartDataFromEventStream(newProps.eventStream)
+        });
+      }
+    } catch (error) {
       this.setState({
-        generationError: "",
-        chartData: chartDataFromEventStream(newProps.eventStream)
+        generationError: error.message,
+        chartData: null
       });
     }
   }
