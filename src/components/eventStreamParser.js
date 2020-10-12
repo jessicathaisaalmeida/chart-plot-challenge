@@ -2,8 +2,11 @@ import json5 from "json5";
 
 const startParser = {
   validate: function (data) {
-    // is valid parset command?
-    return true;
+    let isValid = true;
+    Object.keys(this.definition).forEach((def) => {
+      if (!data[def]) isValid = false;
+    });
+    return isValid;
   },
   isMyTypeOfEvent: function (data) {
     // check if this event stream line is a start line
@@ -19,19 +22,29 @@ const startParser = {
 
 const dataParser = {
   validate: function (data) {
-    // is valid parset command?
-    return true;
+    let isValid = true;
+    Object.keys(this.definition).forEach((def) => {
+      if (!data[def]) isValid = false;
+    });
+    return isValid;
   },
   isMyTypeOfEvent: function (data) {
     // check if this event stream line is a data line
     return data.type === "data";
+  },
+  definition: {
+    type: "string",
+    timestamp: "Number"
   }
 };
 
 const stopParser = {
   validate: function (data) {
-    // is valid parset command?
-    return true;
+    let isValid = true;
+    Object.keys(this.definition).forEach((def) => {
+      if (!data[def]) isValid = false;
+    });
+    return isValid;
   },
   isMyTypeOfEvent: function (data) {
     // check if this event stream line is a stop line
@@ -45,8 +58,11 @@ const stopParser = {
 
 const spanParser = {
   validate: function (data) {
-    // is valid parset command?
-    return true;
+    let isValid = true;
+    Object.keys(this.definition).forEach((def) => {
+      if (!data[def]) isValid = false;
+    });
+    return isValid;
   },
   isMyTypeOfEvent: function (data) {
     // check if this event stream line is a span line
@@ -64,12 +80,14 @@ const parserStrategies = [startParser, spanParser, stopParser, dataParser];
 
 export const parseEventStreamToList = (eventStream) => {
   let eventList = [];
-  let line = 0;
   eventStream.split("\n").forEach((eventStreamLine) => {
-    line++;
-    eventList.push(json5.parse(eventStreamLine));
+    const eventObject = json5.parse(eventStreamLine);
     //validate the objects
+    parserStrategies.forEach((strategy) => {
+      if (strategy.isMyTypeOfEvent(eventObject)) {
+        if (strategy.validate(eventObject)) eventList.push(eventObject);
+      }
+    });
   });
-
   return eventList;
 };
