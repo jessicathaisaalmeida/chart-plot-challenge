@@ -21,13 +21,6 @@ const inicialData = `{type: 'start', timestamp: 1605013270000, select: ['min_res
 {type: 'data', timestamp: 1605013360000, os: 'linux', browser: 'chrome', min_response_time: 0.3, max_response_time: 2.8}
 {type: 'stop', timestamp: 1605013360000}`;
 
-export const dots = () => {
-  return Array(1000).join(". ");
-};
-export const oos = () => {
-  return Array(1000).join("o ");
-};
-
 export default class App extends React.Component {
   constructor(props) {
     super(props);
