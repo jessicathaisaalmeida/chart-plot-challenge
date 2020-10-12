@@ -1,5 +1,5 @@
 import React from "react";
-import { Line } from "react-chartjs-2";
+import LineChart from "./LineChart";
 import Button from "@material-ui/core/Button";
 import { parseEventStreamToList } from "./eventStreamParser";
 import { reduceEventsInGroups } from "./eventListReducer";
@@ -10,8 +10,6 @@ const GenerateChartArea = {
   bottom: "0px",
   padding: "10px"
 };
-
-let chartOptions = {};
 
 function formatTimeLabel(timestamp) {
   let date = new Date(timestamp);
@@ -32,7 +30,7 @@ function formatDateLabel(timestamp) {
 }
 
 function generateChartOptions(labels) {
-  chartOptions = {
+  return {
     responsive: true,
     elements: {
       line: {
@@ -84,27 +82,50 @@ function generateChartOptions(labels) {
   };
 }
 
-function chartGenerate(eventStream) {
+function chartDataFromEventStream(eventStream) {
+  if (!eventStream) return { dataset: { datasets: [] }, options: {} };
   let eventGroups = reduceEventsInGroups(parseEventStreamToList(eventStream));
 
-  generateChartOptions(eventGroups.labels);
-
   return {
-    datasets: eventGroups.datasets
+    dataset: { datasets: eventGroups.datasets },
+    options: generateChartOptions(eventGroups.labels)
   };
 }
 
-function prepareDataChart(eventStream) {
-  if (!eventStream) return null;
-
-  return chartGenerate(eventStream);
-}
-
 export default class ChartArea extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      generationError: "",
+      chartData: { dataset: { datasets: [] }, options: {} }
+    };
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.eventStream) {
+      //try {
+      this.setState({
+        generationError: "",
+        chartData: chartDataFromEventStream(newProps.eventStream)
+      });
+      /*} catch (err) {
+        this.setState({
+          generationError: err.message,
+          chartData: { dataset: { datasets: [] }, options: {} }
+        });
+      }*/
+    }
+  }
+
   render() {
     return (
       <div className="ChartArea">
-        <Line data={prepareDataChart(this.props.data)} options={chartOptions} />
+        <span>{this.state.generationError}</span>
+
+        {this.state.chartData ? (
+          <LineChart chartData={this.state.chartData} />
+        ) : null}
+
         <div style={GenerateChartArea}>
           <Button
             variant="contained"

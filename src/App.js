@@ -34,7 +34,7 @@ export default class App extends React.Component {
           onChange={(newValue) => this.setState({ data: newValue })}
         />
         <ChartArea
-          data={this.state.currentData}
+          eventStream={this.state.currentData}
           onClick={() => this.setState({ currentData: this.state.data })}
         />
       </div>

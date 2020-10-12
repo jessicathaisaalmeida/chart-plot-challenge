@@ -104,10 +104,8 @@ export const reduceEventsInGroups = (eventList) => {
   });
 
   let plotDataset = [];
-  console.log(datasets);
   Object.keys(datasets).forEach((group) => {
     Object.keys(datasets[group]).forEach((label) => {
-      console.log(datasets[group][label]);
       plotDataset.push(datasets[group][label]);
     });
   });

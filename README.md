@@ -19,3 +19,6 @@ For this challenge I used some dependencies in order to help and minimize the ef
 
 - `material-ui/core`
   Used for Material Design interface buttons;
+
+- `json5`
+  Used to parse the input stream into an object;
