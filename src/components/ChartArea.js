@@ -2,7 +2,7 @@ import React from "react";
 import LineChart from "./LineChart";
 import Button from "@material-ui/core/Button";
 import { parseEventStreamToList } from "./eventStreamParser";
-import { reduceEventsInGroups } from "./eventListReducer";
+import { reduceEventsInDataChart } from "./eventListReducer";
 
 const GenerateChartArea = {
   width: "100%",
@@ -84,11 +84,13 @@ function generateChartOptions(labels) {
 
 function chartDataFromEventStream(eventStream) {
   if (!eventStream) return { dataset: { datasets: [] }, options: {} };
-  let eventGroups = reduceEventsInGroups(parseEventStreamToList(eventStream));
+  let eventsDataChart = reduceEventsInDataChart(
+    parseEventStreamToList(eventStream)
+  );
 
   return {
-    dataset: { datasets: eventGroups.datasets },
-    options: generateChartOptions(eventGroups.labels)
+    dataset: { datasets: eventsDataChart.datasets },
+    options: generateChartOptions(eventsDataChart.labels)
   };
 }
 
