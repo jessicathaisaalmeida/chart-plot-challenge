@@ -90,10 +90,10 @@ export const reduceStopEvent = {
   isMyTypeOfEvent: function (event, chart) {
     // check if this event is a stop
     return (
-      (!chart ||
-        !chart.labels ||
-        chart.labels.length <= 1 ||
-        event.timestamp < chart.labels[chart.labels.length - 1]) &&
+      (chart &&
+        chart.labels &&
+        chart.labels.length > 1 &&
+        event.timestamp < chart.labels[chart.labels.length - 1]) ||
       event.type === "stop"
     );
   },
@@ -179,7 +179,7 @@ export const reduceEventsInDataChart = (eventList) => {
     });
   });
   return {
-    labels: chart.labels,
+    ...chart,
     datasets: plotDataset
   };
 };

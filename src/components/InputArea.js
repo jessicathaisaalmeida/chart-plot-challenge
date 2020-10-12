@@ -2,7 +2,7 @@ import React from "react";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/theme-solarized_dark";
 
 const fullSizedEditor = {
   width: "100%",
@@ -18,7 +18,8 @@ export default class InputArea extends React.Component {
         <AceEditor
           style={fullSizedEditor}
           mode="javascript"
-          theme="monokai"
+          theme="solarized_dark"
+          showPrintMargin={false}
           onChange={this.props.onChange}
           value={this.props.value}
         />

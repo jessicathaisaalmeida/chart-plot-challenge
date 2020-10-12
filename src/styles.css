@@ -1,18 +1,57 @@
+html {
+  height: 100%;
+  font-family: "Source Sans Pro", sans-serif;
+}
+body {
+  height: 100%;
+  min-height: 100%;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+}
+
+.challenge {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+.title {
+  padding: 10px 50px;
+  font-size: 2rem;
+}
+
+.input {
+  background-color: lightgray;
+  height: 100%;
+}
+
+.chart {
+  padding: 0 80px;
+}
+
+.button {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  height: 40px;
+  padding: 10px 50px;
+  background-color: lightgray;
+}
+
 .App {
   font-family: "Source Sans Pro", sans-serif;
-  text-align: left;
-  padding: 0;
-  display: grid;
+
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 
 .InputArea {
   width: 100%;
-  height: 300px;
+  height: 100%;
 }
 
 .ChartArea {
   width: 100%;
-  height: 50%;
 }

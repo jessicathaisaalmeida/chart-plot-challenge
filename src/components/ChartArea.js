@@ -1,15 +1,7 @@
 import React from "react";
 import LineChart from "./LineChart";
-import Button from "@material-ui/core/Button";
 import { parseEventStreamToList } from "./eventStreamParser";
 import { reduceEventsInDataChart } from "./eventListReducer";
-
-const GenerateChartArea = {
-  width: "100%",
-  backgroundColor: "lightgray",
-  bottom: "0px",
-  padding: "10px"
-};
 
 function formatTimeLabel(timestamp) {
   let date = new Date(timestamp);
@@ -29,18 +21,29 @@ function formatDateLabel(timestamp) {
   return date.getMonth() + 1 + "/" + date.getDate() + "/" + date.getFullYear();
 }
 
-function generateChartOptions(labels) {
+function generateChartOptions(chart) {
   return {
     responsive: true,
+    maintainAspectRatio: false,
     elements: {
       line: {
         fill: false
       }
     },
+
+    legend: {
+      display: true,
+      position: "right",
+      labels: {
+        usePointStyle: true
+      },
+      padding: 30
+    },
+
     scales: {
       xAxes: [
         {
-          labels: labels,
+          labels: chart.labels,
           display: true,
           gridLines: {
             display: false
@@ -49,14 +52,15 @@ function generateChartOptions(labels) {
             // Include a dollar sign in the ticks
             callback: function (value, index, values) {
               return formatTimeLabel(value);
-            }
+            },
+            min: chart.begin,
+            max: chart.end
           }
         }
       ],
       yAxes: [
         {
           type: "linear",
-          display: true,
           position: "left",
           gridLines: {
             display: true
@@ -88,9 +92,11 @@ function chartDataFromEventStream(eventStream) {
     parseEventStreamToList(eventStream)
   );
 
+  console.log(eventsDataChart);
+
   return {
     dataset: { datasets: eventsDataChart.datasets },
-    options: generateChartOptions(eventsDataChart.labels)
+    options: generateChartOptions(eventsDataChart)
   };
 }
 
@@ -105,38 +111,24 @@ export default class ChartArea extends React.Component {
 
   componentWillReceiveProps(newProps) {
     if (newProps.eventStream) {
-      //try {
       this.setState({
         generationError: "",
         chartData: chartDataFromEventStream(newProps.eventStream)
       });
-      /*} catch (err) {
-        this.setState({
-          generationError: err.message,
-          chartData: { dataset: { datasets: [] }, options: {} }
-        });
-      }*/
     }
   }
 
   render() {
     return (
-      <div className="ChartArea">
+      <div
+        className="ChartArea"
+        style={{ position: "relative", height: "40vh", width: "80vw" }}
+      >
         <span>{this.state.generationError}</span>
 
         {this.state.chartData ? (
           <LineChart chartData={this.state.chartData} />
         ) : null}
-
-        <div style={GenerateChartArea}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={this.props.onClick}
-          >
-            Generate Chart
-          </Button>
-        </div>
       </div>
     );
   }
